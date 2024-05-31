@@ -158,4 +158,20 @@ document.addEventListener('DOMContentLoaded', function() {
             showNotification(songName, payment);
         });
     }
+
+    // 滚动监听事件
+    window.addEventListener('scroll', function() {
+        const buttonContainer = document.querySelector('.button-container');
+        const floatBtn1 = document.getElementById('floatBtn1');
+        const floatBtn2 = document.getElementById('floatBtn2');
+        const rect = buttonContainer.getBoundingClientRect();
+
+        if (rect.bottom < 0) {
+            floatBtn1.style.display = 'block';
+            floatBtn2.style.display = 'block';
+        } else {
+            floatBtn1.style.display = 'none';
+            floatBtn2.style.display = 'none';
+        }
+    });
 });

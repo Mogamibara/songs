@@ -353,3 +353,9 @@ label input[type="checkbox"]:checked+span>span{
     object-fit: contain; /* 保持图片内容 */
     margin: auto; /* 居中图片 */
 }
+
+
+/* 默认隐藏悬浮按钮1和2 */
+#floatBtn1, #floatBtn2 {
+    display: none;
+}
