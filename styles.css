@@ -1,0 +1,275 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+
+.image-container {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid rgb(128, 0, 102); /* 紫色边框 */
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 确保图片覆盖整个容器 */
+}
+
+.title {
+    color: rgb(227, 88, 178);
+    text-align: center;
+    margin-top: 20px;
+    text-shadow: 
+        -1px -1px 0 #fff,  
+         1px -1px 0 #fff,
+         -1px  1px 0 #fff,
+          1px  1px 0 #fff; /* 白色描边 */
+}
+
+.button-container {
+    margin-bottom: 20px; /* 添加底部间距 */
+}
+
+.btn-custom {
+    background-color: white;
+    color: black;
+    border-radius: 50px; /* 圆角 */
+    border: 1px solid #ced4da;
+    padding: 10px 20px;
+    margin: 0 20px;
+    width: 130px;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.btn-custom .btn-icon {
+    height: 15px;
+    margin-right: 3px; /* 图片和文字之间的间距 */
+    position: relative;
+    top: -2px; /* 向上偏移 */
+}
+
+.table-container {
+    overflow-x: auto;
+    position: relative;
+    /*white-space: nowrap;  可以换行*/
+    border-radius: 10px; /* 圆角 */
+}
+
+table {
+    width: 100%;
+    border-collapse: separate; /* 修改为 separate */
+    border-spacing: 0; /* 去除间距 */
+    /*margin-top: 20px;*/
+    background-color: rgba(255, 255, 255, 0.8);
+    table-layout: fixed; /* 固定列宽 */
+    overflow: hidden; /* 确保圆角生效 */
+    border-radius: 10px; /* 确保右侧圆角生效 */
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    /*width: 150px;*/ /* 固定列宽度 */
+    overflow: hidden;
+    /*white-space: nowrap;
+    text-overflow: ellipsis;    可以换行*/
+}
+
+.table-container th:nth-child(1),
+.table-container td:nth-child(1) {
+    width: 170px; /* 第一列宽度150px */
+}
+.table-container th:nth-child(2),
+.table-container td:nth-child(3) {
+    width: 65px; 
+}
+.table-container th:nth-child(3),
+.table-container td:nth-child(3) {
+    width: 120px; 
+}
+.table-container th:nth-child(4),
+.table-container td:nth-child(4) {
+    width: 65px; 
+}
+.table-container th:nth-child(5),
+.table-container td:nth-child(5) {
+    width: 100px; 
+}
+.table-container th:nth-child(6),
+.table-container td:nth-child(6) {
+    width: 100px; 
+}
+.table-container th:nth-child(7),
+.table-container td:nth-child(7) {
+    width: 100px; 
+}
+.table-container th:nth-child(7),
+.table-container td:nth-child(7) {
+    width: 150px; 
+}
+
+th {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+tbody tr {
+    background-color: rgba(255, 255, 255, 0.8);
+    cursor: pointer; /* 鼠标移上去时变成手指状指针 */
+    transition: background-color 0.3s; /* 添加过渡效果 */
+}
+
+tbody tr:hover {
+    background-color: rgba(244, 181, 233, 0.8); /* 鼠标移上去时改变颜色 */
+}
+
+th:first-child, td:first-child {
+    position: sticky;
+    left: 0;
+    /*background-color: rgba(255, 255, 255, 0.8);  确保与表头背景一致 */
+    z-index: 100;
+}
+
+
+input, select {
+    padding: 10px;
+    height: 40px;
+}
+
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.form-container .form-group {
+    flex: 1 1 45%;
+}
+
+.select2-container--default .select2-selection--multiple {
+    /*padding-top: 2px;*/
+    height: 40px;
+    text-align: left;
+    overflow: hidden;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    margin-right: 2px;  /* tag之间的距离 */
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #fff;
+    border: 1px solid #aaa;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: #ccc;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 9px;
+    float: right;
+    font-size: 12px;
+    margin-left: 4px;
+    margin-top: 1px;
+}
+
+.checkbox-container {
+    text-align: left;
+    margin-top: 10px;
+}
+
+
+
+#notification {
+    background-color: rgba(221, 160, 221, 0.751);
+    border: 1px solid purple;
+    color: white;
+}
+
+
+@media (min-aspect-ratio: 1/1) {
+    body {
+        background-image: url('1.jpg');
+    }
+    .form-container {
+        flex-wrap: nowrap;
+    }
+    .form-container .form-group {
+        flex: 1;
+        margin-bottom: 0;
+    }
+}
+
+@media (max-aspect-ratio: 1/1) {
+    body {
+        background-image: url('1.jpg');
+    }
+}
+
+
+#popupNotification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    font-size: 16px;
+    text-align: center;
+}
+
+
+label{
+    display: inline-block;
+    width: 200px;
+    text-align: left;
+    line-height: 26px;
+    color:#393939;
+    text-shadow: 
+        -1px -1px 0 #fff,  
+         1px -1px 0 #fff,
+         -1px  1px 0 #fff,
+          1px  1px 0 #fff; /* 白色描边 */
+}
+label input[type="checkbox"]{
+    display: none;
+}
+label input[type="checkbox"]+span{
+    box-sizing: border-box;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    padding: 2px;
+    border: 2px solid #ccc;
+    vertical-align: sub;
+    margin-right: 5px;
+}
+label input[type="checkbox"]+span>span{
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    float: left;
+    background: #ff92eb;
+    opacity: 0;
+}
+label input[type="checkbox"]:checked+span{
+    border-color: #ff92eb;
+}
+label:hover input[type="checkbox"]+span>span{
+    opacity: 0.5;
+}
+label input[type="checkbox"]:checked+span>span{
+    opacity: 1;
+}
