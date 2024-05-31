@@ -68,7 +68,7 @@ table {
     width: 100%;
     border-collapse: separate; /* 修改为 separate */
     border-spacing: 0; /* 去除间距 */
-    /*margin-top: 20px;*/
+    margin-top: 20px;
     background-color: rgba(255, 255, 255, 0.8);
     table-layout: fixed; /* 固定列宽 */
     overflow: hidden; /* 确保圆角生效 */
@@ -84,38 +84,55 @@ th, td {
     text-overflow: ellipsis;    可以换行*/
 }
 
+/* 歌名 */
 .table-container th:nth-child(1),
 .table-container td:nth-child(1) {
-    width: 170px; /* 第一列宽度150px */
+    width: 300px; /* 第一列宽度150px */
 }
+
+/* 点唱 */
 .table-container th:nth-child(2),
-.table-container td:nth-child(3) {
-    width: 65px; 
+.table-container td:nth-child(2) {
+    width: 65px;
+    display: none;
+
 }
+
+/* 歌手 */
 .table-container th:nth-child(3),
 .table-container td:nth-child(3) {
-    width: 120px; 
+    width: 250px; 
 }
+
+/* 语言 */
 .table-container th:nth-child(4),
 .table-container td:nth-child(4) {
-    width: 65px; 
+    width: 80px; 
 }
+
+/* 曲风 */
 .table-container th:nth-child(5),
 .table-container td:nth-child(5) {
-    width: 100px; 
+    width: 120px; 
 }
+
+/* 付费 */
 .table-container th:nth-child(6),
 .table-container td:nth-child(6) {
     width: 100px; 
+    display: none;
 }
+
+/* 备注 */
 .table-container th:nth-child(7),
 .table-container td:nth-child(7) {
-    width: 100px; 
+    width: 120px; 
 }
-.table-container th:nth-child(7),
-.table-container td:nth-child(7) {
+/*
+.table-container th:nth-child(8),
+.table-container td:nth-child(8) {
     width: 150px; 
-}
+}*/
 
 th {
     background-color: rgba(255, 255, 255, 0.8);
@@ -272,4 +289,67 @@ label:hover input[type="checkbox"]+span>span{
 }
 label input[type="checkbox"]:checked+span>span{
     opacity: 1;
+}
+
+#floatingButtons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* 按钮之间的间距 */
+    z-index: 1000; /* 确保按钮在最上层 */
+}
+
+#floatingButtons button {
+    width: 60px; /* 按钮宽度 */
+    height: 60px; /* 按钮高度 */
+    background-color: white; /* 按钮背景色白色 */
+    border: none; /* 去掉边框 */
+    border-radius: 10px; /* 小圆角 */
+    padding: 0; /* 去掉默认填充 */
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影 */
+    opacity: 1; /* 不透明 */
+    outline: none; /* 去掉焦点黑边 */
+    transition: background-color 0.3s; /* 添加背景色过渡效果 */
+}
+
+#floatingButtons button:focus {
+    outline: none; /* 去掉点击后的黑边 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 保持阴影效果 */
+}
+
+#floatingButtons button:hover {
+    background-color: #f0f0f0; /* 悬停时背景变灰 */
+}
+
+#floatingButtons button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 确保图片覆盖整个按钮 */
+    border-radius: 10px; /* 与按钮保持一致的小圆角 */
+}
+
+
+/* 特定样式用于缩小第1个按钮的图片 */
+#floatingButtons button:nth-child(1) img {
+    width: 50%; /* 缩小图片大小 */
+    height: 50%; /* 缩小图片大小 */
+    object-fit: contain; /* 保持图片内容 */
+    margin: auto; /* 居中图片 */
+}
+/* 特定样式用于缩小第2个按钮的图片 */
+#floatingButtons button:nth-child(2) img {
+    width: 50%; /* 缩小图片大小 */
+    height: 50%; /* 缩小图片大小 */
+    object-fit: contain; /* 保持图片内容 */
+    margin: auto; /* 居中图片 */
+}
+/* 特定样式用于缩小第四个按钮的图片 */
+#floatingButtons button:nth-child(4) img {
+    width: 50%; /* 缩小图片大小 */
+    height: 50%; /* 缩小图片大小 */
+    object-fit: contain; /* 保持图片内容 */
+    margin: auto; /* 居中图片 */
 }
