@@ -6,12 +6,20 @@ document.addEventListener('DOMContentLoaded', function() {
         closeOnSelect: false,
         dropdownCssClass: 'custom-dropdown'
     });
+    $('#singerSelect').select2({
+        placeholder: '选择歌手',
+        width: '100%',
+        closeOnSelect: false,
+        dropdownCssClass: 'custom-dropdown'
+    });
+    
     $('#genreSelect').select2({
         placeholder: '选择曲风',
         width: '100%',
         closeOnSelect: false,
         dropdownCssClass: 'custom-dropdown'
     });
+    
 
     // 创建并显示弹窗
     const popup = document.createElement('div');
@@ -41,8 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
     const languageSelect = $('#languageSelect');
     const genreSelect = $('#genreSelect');
-    const paymentSelect = document.getElementById('paymentSelect');
-    const onlyShowSingable = document.getElementById('onlyShowSingable'); // 新增的勾选框
+    const singerSelect = $('#singerSelect');
+    //const paymentSelect = document.getElementById('paymentSelect');
+    //const onlyShowSingable = document.getElementById('onlyShowSingable'); // 新增的勾选框
     const table = document.getElementById('musicTable');
     const rows = table.getElementsByTagName('tr');
     const notification = document.getElementById('notification');
@@ -52,8 +61,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const searchFilter = searchInput.value.toLowerCase();
         const selectedLanguages = languageSelect.val();
         const selectedGenres = genreSelect.val();
-        const selectedPayment = paymentSelect.value;
-        const showSingableOnly = onlyShowSingable.checked; // 勾选框状态
+        const selectedSinger= singerSelect.val();
+        //const selectedPayment = paymentSelect.value;
+        //const showSingableOnly = onlyShowSingable.checked; // 勾选框状态
 
         for (let i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
             const cells = rows[i].getElementsByTagName('td');
@@ -68,9 +78,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const matchesSearch = songName.includes(searchFilter) || artistName.includes(searchFilter);
             const matchesLanguage = selectedLanguages.length === 0 || selectedLanguages.includes(language);
             const matchesGenre = selectedGenres.length === 0 || selectedGenres.some(genre => genres.includes(genre));
+            const matchesSinger =  selectedSinger.length === 0 || selectedSinger.some(singer => artistName.includes(singer.toLowerCase()));
             let matchesPayment = true;
-            let matchesSingable = !showSingableOnly || singable.trim() !== ''; // 仅显示可点唱歌曲
+            //let matchesSingable = !showSingableOnly || singable.trim() !== ''; // 仅显示可点唱歌曲
+            const matchesSingable = true
 
+            /*
             switch (selectedPayment) {
                 case 'free':
                     matchesPayment = payment === '';
@@ -82,8 +95,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     matchesPayment = cut !== '';
                     break;
             }
+            */
 
-            if (matchesSearch && matchesLanguage && matchesGenre && matchesPayment && matchesSingable) {
+            if (matchesSearch && matchesLanguage && matchesGenre && matchesSinger && matchesPayment && matchesSingable) {
                 rows[i].style.display = '';
             } else {
                 rows[i].style.display = 'none';
@@ -127,8 +141,9 @@ document.addEventListener('DOMContentLoaded', function() {
     searchInput.addEventListener('input', filterTable);
     languageSelect.on('change', filterTable);
     genreSelect.on('change', filterTable);
-    paymentSelect.addEventListener('change', filterTable);
-    onlyShowSingable.addEventListener('change', filterTable); // 添加勾选框事件监听
+    singerSelect.on('change', filterTable);
+    //paymentSelect.addEventListener('change', filterTable);
+    //onlyShowSingable.addEventListener('change', filterTable); // 添加勾选框事件监听
 
     // 页面加载时初始化过滤逻辑
     filterTable();
