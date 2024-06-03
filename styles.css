@@ -175,7 +175,8 @@ input, select {
     /*padding-top: 2px;*/
     height: 40px;
     text-align: left;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
@@ -358,4 +359,33 @@ label input[type="checkbox"]:checked+span>span{
 /* 默认隐藏悬浮按钮1和2 */
 #floatBtn1, #floatBtn2 {
     display: none;
+}
+
+
+/* 弹窗样式 */
+#groupPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+    text-align: center;
+    display: none;
+}
+#groupPopup button {
+    margin: 10px;
+    padding: 10px 20px; /* 增加按钮的宽度 */
+    border-radius: 10px; /* 添加圆角 */
+    border: none; /* 去掉默认边框 */
+    background-color: #ff9de2; /* 按钮背景颜色 */
+    color: white; /* 按钮文字颜色 */
+    cursor: pointer;
+}
+#groupPopup button:hover {
+    background-color: #e752c7; /* 悬停时的按钮背景颜色 */
 }

@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const rows = table.getElementsByTagName('tr');
     const notification = document.getElementById('notification');
     const notificationMessage = document.getElementById('notificationMessage');
+    let notificationTimeout;
 
     function filterTable() {
         const searchFilter = searchInput.value.toLowerCase();
@@ -112,7 +113,13 @@ document.addEventListener('DOMContentLoaded', function() {
             notificationMessage.textContent = `歌曲《${songName}》复制成功，赶快去直播间点歌吧~`;
         }
         notification.style.display = 'block';
-        setTimeout(() => {
+        // 清除现有的计时器
+        if (notificationTimeout) {
+            clearTimeout(notificationTimeout);
+        }
+
+        // 设置新的计时器
+        notificationTimeout = setTimeout(() => {
             notification.style.display = 'none';
         }, 5000);
     }
@@ -174,4 +181,39 @@ document.addEventListener('DOMContentLoaded', function() {
             floatBtn2.style.display = 'none';
         }
     });
+
+
+    // 创建并添加群号弹窗
+    const groupPopup = document.createElement('div');
+    groupPopup.id = 'groupPopup';
+    groupPopup.innerHTML = `
+        <p>如果没办法正常跳转，可以手动添加哦~ 群号：223544307</p>
+        <button id="copyBtn">复制</button>
+        <button id="closeBtn">确定</button>
+    `;
+    document.body.appendChild(groupPopup);
+
+    // 复制功能
+    document.getElementById('copyBtn').addEventListener('click', () => {
+        navigator.clipboard.writeText('223544307').then(() => {
+            alert('群号已复制到剪贴板');
+        }).catch(err => {
+            alert('复制失败');
+        });
+    });
+
+    // 关闭弹窗
+    document.getElementById('closeBtn').addEventListener('click', () => {
+        groupPopup.style.display = 'none';
+    });
+
+    // 第三个按钮点击处理
+    function handleThirdButtonClick() {
+        window.open('http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=dP_H5MXQ__6Cxkg4iqaAzJTPpif_61hb&authKey=ZYqN3mcEjJDZPlDCNfd7b0JhRUzjfP2dpY0pLsA%2BdcN%2FUqdvLa6q%2F2kumJVIWHor&noverify=0&group_code=223544307', '_blank'); // 替换为实际链接
+        groupPopup.style.display = 'block';
+    }
+
+    // 给第三个悬浮按钮添加点击事件
+    document.getElementById('floatBtn3').addEventListener('click', handleThirdButtonClick);
+
 });
