@@ -40,11 +40,17 @@ document.addEventListener('DOMContentLoaded', function() {
     popup.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.5)';
     popup.style.fontSize = '16px';
     popup.style.textAlign = 'center';
+    popup.style.display = 'none'
+
+    // 6秒后自动关闭弹窗
+    setTimeout(() => {
+        popup.style.display = 'block';
+    }, 6000);
 
     // 6秒后自动关闭弹窗
     setTimeout(() => {
         popup.style.display = 'none';
-    }, 6000);
+    }, 11000);
 
     const searchInput = document.getElementById('searchInput');
     const languageSelect = $('#languageSelect');
@@ -217,3 +223,198 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('floatBtn3').addEventListener('click', handleThirdButtonClick);
 
 });
+
+
+// Create canvas for rain effect
+const canvasRain = document.createElement('canvas');
+document.getElementById('matrixRain').appendChild(canvasRain);
+canvasRain.width = window.innerWidth;
+canvasRain.height = window.innerHeight;
+const ctxRain = canvasRain.getContext('2d');
+
+// Create canvas for text and cursor effect
+const canvasText = document.createElement('canvas');
+document.getElementById('matrixText').appendChild(canvasText);
+canvasText.width = window.innerWidth;
+canvasText.height = window.innerHeight;
+const ctxText = canvasText.getContext('2d');
+
+// Rain effect variables
+const fontSize = 14;
+const columns = canvasRain.width / fontSize;
+const drops = Array(Math.floor(columns)).fill(1);
+const sequences = Array(Math.floor(columns)).fill('');
+
+const words = ['カンバラハル', 'モガミバラ', '最上原'];
+
+function generateSequence() {
+  const sequence = [];
+  for (let i = 0; i < canvasRain.height / fontSize; i++) {
+    if (Math.random() > 0.99) {
+      const word = words[Math.floor(Math.random() * words.length)];
+      for (let char of word) {
+        sequence.push({ text: char, bold: true });
+      }
+      i += word.length - 1; // 跳过词汇的长度
+    } else {
+      sequence.push({ text: String.fromCharCode(Math.floor(Math.random() * 128)), bold: false });
+    }
+  }
+  return sequence;
+}
+
+function drawRain() {
+  ctxRain.fillStyle = 'rgba(0, 0, 0, 0.05)';
+  ctxRain.fillRect(0, 0, canvasRain.width, canvasRain.height);
+
+  ctxRain.fillStyle = '#FF69B4'; // 粉色
+  ctxRain.font = `${fontSize}px monospace`;
+
+  for (let i = 0; i < drops.length; i++) {
+    const sequence = sequences[i];
+    const charData = sequence[drops[i]];
+
+    if (drops[i] < sequence.length) {
+      if (charData.bold) {
+        ctxRain.font = `bold ${fontSize}px monospace`;
+      } else {
+        ctxRain.font = `${fontSize}px monospace`;
+      }
+
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+
+      ctxRain.fillText(charData.text, x, y);
+    }
+
+    if (drops[i] * fontSize > canvasRain.height && Math.random() > 0.975) {
+      drops[i] = 0;
+      sequences[i] = generateSequence();
+    }
+
+    drops[i]++;
+  }
+}
+
+for (let i = 0; i < sequences.length; i++) {
+  sequences[i] = generateSequence();
+}
+
+setInterval(drawRain, 33);
+
+// Text typing and cursor effect variables
+const message = "WEL2MyW0r1d";
+const messageParts = ["WEL", "2", "My", "W0r1d!!"];
+let messageIndex = 0;
+let messagePartIndex = 0;
+
+
+// 动态调整字体大小
+function calculateFontSize() {
+    let tempFontSize = 80;
+    ctxText.font = `${tempFontSize}px monospace`;
+    let totalWidth = messageParts.reduce((acc, part) => acc + ctxText.measureText(part).width, 0) + (messageParts.length - 1) * 10;
+
+    while (totalWidth > canvasText.width - 100 && tempFontSize > 10) {
+        tempFontSize -= 1;
+        ctxText.font = `${tempFontSize}px monospace`;
+        totalWidth = messageParts.reduce((acc, part) => acc + ctxText.measureText(part).width, 0) + (messageParts.length - 1) * 10;
+    }
+
+    return tempFontSize;
+}
+
+const typingFontSize = calculateFontSize();
+// 计算字符串 "Welcome2MyWorld" 的总宽度并居中
+ctxText.font = `${typingFontSize}px monospace`;
+const totalMessageWidth = ctxText.measureText(message).width;
+let messageX = (canvasText.width - totalMessageWidth) / 2;
+
+let messageY = canvasText.height / 2;
+const typedCharacters = []; // 存储已经打出来的字符
+ctxText.fillStyle = "#FF69B4"; // 粉色
+
+let cursorX = messageX; // 光标位置
+let cursorVisible = true;
+let blinkCursorTimeout; // 光标闪烁计时器
+
+
+function drawTypedCharacters() {
+  ctxText.clearRect(0, 0, canvasText.width, canvasText.height);
+  ctxText.font = `${typingFontSize}px monospace`;
+  ctxText.fillStyle = "#FF69B4";
+  typedCharacters.forEach(({ char, x, y }) => {
+    ctxText.fillText(char, x, y);
+  });
+  // 根据 cursorVisible 绘制光标
+  if (cursorVisible) {
+    ctxText.fillText('_', cursorX, messageY);
+  }
+}
+
+function blinkCursor() {
+  cursorVisible = !cursorVisible;
+  blinkCursorTimeout = setTimeout(blinkCursor, 500);
+}
+
+function resetBlinkCursor() {
+  clearTimeout(blinkCursorTimeout);
+  blinkCursor();
+  cursorVisible = true; // 确保光标在打字时可见
+}
+
+function typeMessage() {
+  if (messageIndex < messageParts.length) {
+    const part = messageParts[messageIndex];
+    if (messagePartIndex < part.length) {
+      const char = part[messagePartIndex];
+      ctxText.font = `${typingFontSize}px monospace`; // 确保字体大小在这里被设置
+      typedCharacters.push({ char: char, x: messageX, y: messageY });
+      ctxText.fillText(char, messageX, messageY);
+      messageX += ctxText.measureText(char).width;
+      cursorX = messageX; // 更新光标位置
+      messagePartIndex++;
+
+      // 每当字符增加时，重置光标闪烁计时器
+      resetBlinkCursor();
+
+      const delay = Math.random() * 100 + 50;
+      setTimeout(typeMessage, delay);
+    } else {
+      messageIndex++;
+      messagePartIndex = 0;
+      const part = messageParts[messageIndex - 1];
+      const pauseDelay = part === "WEL" || part === "2" || part === "My" ? 500 : 100;
+      setTimeout(typeMessage, pauseDelay);
+      messageX += 0; // 在分隔符处增加一点间隔
+      cursorX = messageX; // 更新光标位置
+    }
+  }
+}
+
+// 启动打字效果和光标闪烁
+setTimeout(typeMessage, 2000);
+blinkCursor();
+
+// 在每次画布刷新时绘制已经打出来的字符
+function animate() {
+  drawTypedCharacters();
+  requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+
+
+// 五秒后逐渐隐藏Canvas并显示实际内容
+setTimeout(() => {
+    const canvasContainer = document.getElementById('canvasContainer');
+    canvasContainer.style.opacity = 0;
+    setTimeout(() => {
+      canvasContainer.style.display = 'none';
+    }, 2000); // 匹配CSS中的transition时间
+    setTimeout(() => {
+        document.getElementById('mainContent').style.display = 'block';
+    }, 1000); // 匹配CSS中的transition时间
+}, 5000);
+  
+
