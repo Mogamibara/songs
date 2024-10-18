@@ -130,6 +130,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     }
 
+    function showNotification2(songName, payment) {
+        if (payment) {
+            notificationMessage.textContent = `为你随机到了歌曲《${songName}》，复制成功，此歌曲需要${payment}点歌哟~`;
+        } else {
+            notificationMessage.textContent = `为你随机到了歌曲《${songName}》，复制成功，赶快去直播间点歌吧~`;
+        }
+        notification.style.display = 'block';
+        // 清除现有的计时器
+        if (notificationTimeout) {
+            clearTimeout(notificationTimeout);
+        }
+
+        // 设置新的计时器
+        notificationTimeout = setTimeout(() => {
+            notification.style.display = 'none';
+        }, 5000);
+    }
+
     function copyToClipboard(text) {
         const textarea = document.createElement('textarea');
         textarea.value = text;
@@ -221,6 +239,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 给第三个悬浮按钮添加点击事件
     document.getElementById('floatBtn3').addEventListener('click', handleThirdButtonClick);
+
+    // 为随机点歌按钮添加事件监听
+    const randomSongBtn = document.getElementById('randomSongBtn');
+    randomSongBtn.addEventListener('click', function() {
+        // 获取所有可见的歌曲行
+        const visibleRows = Array.from(rows).filter(row => row.style.display !== 'none' && row.querySelector('td')); 
+
+        if (visibleRows.length > 0) {
+            // 随机选择一个可见的行
+            const randomIndex = Math.floor(Math.random() * visibleRows.length);
+            const selectedRow = visibleRows[randomIndex];
+            const songName = selectedRow.getElementsByTagName('td')[0].textContent;
+            const paymentCell = selectedRow.getElementsByTagName('td')[5];
+            const payment = getPaymentContent(paymentCell);
+
+            // 复制点歌文本到剪贴板并显示通知
+            copyToClipboard(`点歌 ${songName}`);
+            showNotification2(songName, payment);
+        } else {
+            alert('当前没有可选歌曲');
+        }
+    });
 
 });
 

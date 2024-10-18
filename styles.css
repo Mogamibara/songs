@@ -347,8 +347,15 @@ label input[type="checkbox"]:checked+span>span{
     object-fit: contain; /* 保持图片内容 */
     margin: auto; /* 居中图片 */
 }
-/* 特定样式用于缩小第四个按钮的图片 */
-#floatingButtons button:nth-child(4) img {
+/* 特定样式用于缩小第3个按钮的图片 */
+#floatingButtons button:nth-child(3) img {
+    width: 75%; /* 缩小图片大小 */
+    height: 75%; /* 缩小图片大小 */
+    object-fit: contain; /* 保持图片内容 */
+    margin: auto; /* 居中图片 */
+}
+/* 特定样式用于缩小第5个按钮的图片 */
+#floatingButtons button:nth-child(5) img {
     width: 50%; /* 缩小图片大小 */
     height: 50%; /* 缩小图片大小 */
     object-fit: contain; /* 保持图片内容 */
